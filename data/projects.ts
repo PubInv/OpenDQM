@@ -11,7 +11,7 @@ export const projects: Project[] = [
     title: "Global Distributed Tracking",
     category: "Provenance",
     description: "Traceable, verifiable records across distributed production networks.",
-    image: "/images/gdt.jpg",
+    image: "OpenDQM/public/images/gdt.jpg",
     alt: "Global Distributed Tracking project logo"
   },
   {
