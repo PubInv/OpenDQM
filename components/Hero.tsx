@@ -46,7 +46,7 @@ export function Hero() {
       </div>
       <div className="container hero-grid">
         <div className="hero-content">
-          <h1>Making is becoming more distributed.</h1>
+          <h1>Distributed Quality Management.</h1>
           <p className="hero-copy">
             Quality management has not yet adapted to an emerging democratized, distributed reality. 
             OpenDQM is researching a shared foundation for this new context.
