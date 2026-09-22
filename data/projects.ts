@@ -18,21 +18,21 @@ export const projects: Project[] = [
     title: "Internet of Production",
     category: "Infrastructure",
     description: "Connecting production knowledge, systems, and participants.",
-    image: "/images/iopa.png",
+    image: "/OpenDQM/images/iopa.png",
     alt: "Internet of Production project logo"
   },
   {
     title: "Open Source Hardware Association",
     category: "Validation",
     description: "Certification for open-source hardware projects.",
-    image: "/images/oshwa.jpg",
+    image: "/OpenDQM/images/oshwa.jpg",
     alt: "Open Source Hardware Association logo"
   },
   {
     title: "Distributed Medical Device Manufacturing",
     category: "Production",
     description: "Experienced team of medical device manufacturers.",
-    image: "/images/dmdm.png",
+    image: "/OpenDQM/images/dmdm.png",
     alt: "Distributed Medical Device Manufacturing project logo"
   }
 ];
