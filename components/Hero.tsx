@@ -48,12 +48,8 @@ export function Hero() {
         <div className="hero-content">
           <h1>Making is becoming more distributed.</h1>
           <p className="hero-copy">
-            Products can be designed, made, tested, and used by different people in different
-            places.
-          </p>
-          <p className="hero-copy">
-            Quality management has not yet adapted to the new digital, democratized, distributed
-            reality. OpenDQM is building the shared foundation it needs.
+            Quality management has not yet adapted to an emerging democratized, distributed reality. 
+            OpenDQM is researching a shared foundation for this new context.
           </p>
           <div className="hero-actions">
             <a className="button hero-button-primary" href={surveyUrl}>

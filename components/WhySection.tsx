@@ -5,19 +5,16 @@ import { GradientHeading } from "@/components/GradientHeading";
 
 const steps = [
   {
-    number: "01",
-    title: "Who made it?",
-    copy: "Understand the people and organizations involved in producing a product."
+    title: "Shared",
+    copy: "A common infrastructure connecting people, systems, and evidence."
   },
   {
-    number: "02",
-    title: "What was checked?",
-    copy: "Make quality evidence easier to understand, share, and verify."
+    title: "Trusted",
+    copy: "Verified information and accountable quality processes."
   },
   {
-    number: "03",
-    title: "Who needs to know?",
-    copy: "Help useful quality information move between the people and organizations that rely on it."
+    title: "The Ecosystem",
+    copy: "OpenDQM is a research project sponsored by the National Science Foundation Pathways for Open Source Ecosystems Phase 1 grant. The Global Open Source Quality Assurance System (GOSQAS), a project of Public Invention and central core of the OpenDQM ecosystem, gratefully partners with other open source community initiatives."
   }
 ];
 
@@ -45,14 +42,13 @@ export function WhySection() {
       <div className="container vertical-story-intro">
         <p className="section-kicker">Why OpenDQM exists</p>
         <GradientHeading
-          lead="Making can cross boundaries."
-          emphasis="Quality needs to cross them too."
+          lead="
+          OpenDQM is researching the establishment of an"
+          emphasis="open, shared, trusted, and interoperable ecosystem."
         />
         <div className="why-copy">
-          <p>A product may involve different makers, organizations, tools, and locations.</p>
-          <p>
-            But information about how it was made, checked, verified, and improved does not always
-            move as easily.
+          <p>that supports democratized quality control, distributed quality assurance, 
+          verification, liability, and continuous improvement across diverse stakeholders.
           </p>
         </div>
       </div>
@@ -63,7 +59,7 @@ export function WhySection() {
               className={`vertical-story-card ${active === index ? "active" : ""}`}
               data-step={index}
             >
-              <span>{step.number}</span>
+              {/* <span>{step.number}</span> */}
               <h3>{step.title}</h3>
               <p>{step.copy}</p>
             </article>
