@@ -19,8 +19,8 @@ export default function AboutPage() {
     <>
       <PageHeader
         eyebrow="About"
-        title="What problem are we trying to solve?"
-        description="Making can happen across many people, tools, and places. Quality information does not always travel with it."
+        title="We are researching the distributed quality management ecosystem."
+        description=""
       />
       <section className="section about-intro">
         <div className="container about-intro-grid">

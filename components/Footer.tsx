@@ -33,11 +33,11 @@ export function Footer() {
             <Link href="/events">Events</Link>
             <span className="footer-unavailable">Resources</span>
           </div>
-          <div className="footer-column">
+          {/* <div className="footer-column">
             <h3>Resources</h3>
             <a href={surveyUrl}>Survey</a>
             <span className="footer-unavailable">Community materials</span>
-          </div>
+          </div> */}
           <div className="footer-column">
             <h3>Connect</h3>
             <Link href="/contact">Contact us</Link>
