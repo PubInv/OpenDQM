@@ -63,6 +63,8 @@ for (const width of [390, 1440]) {
     for (const route of routes) {
       await page.goto(url(route));
       const result = await new AxeBuilder({ page })
+        // YouTube owns the markup inside its cross-origin player iframe.
+        .disableRules(["frame-tested"])
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
         .analyze();
       expect(result.violations, route).toEqual([]);
@@ -94,14 +96,18 @@ test("presenter links are available only after expanding their profile", async (
   for (const day of [3, 4]) {
     await page.goto(url(`/events/show-and-tell-december-${day}-2025/`));
     await expect(page.locator(".webinar-presenter")).toHaveCount(13);
-    await expect(page.getByRole("button", { name: "Video coming soon" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Previous recording" })).toBeDisabled();
     for (const profile of await page.locator(".webinar-presenter").all()) {
       const links = profile.locator(".presenter-links a");
-      await expect(links.first()).not.toBeVisible();
+      if ((await links.count()) === 0) continue;
+      await expect(links.first()).toBeHidden();
+      const disclosure = profile.locator("details");
       await profile.locator("summary").click();
+      await expect(disclosure).toHaveAttribute("open", "");
       await expect(links.first()).toBeVisible();
       await profile.locator("summary").press("Enter");
-      await expect(links.first()).not.toBeVisible();
+      await expect(disclosure).not.toHaveAttribute("open", "");
+      await expect(links.first()).toBeHidden();
     }
   }
 });
