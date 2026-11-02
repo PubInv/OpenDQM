@@ -2,21 +2,93 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/PageHeader";
+import { WebinarRecordings } from "@/components/WebinarRecordings";
 import { webinars } from "@/data/webinars";
+import { pastEvents } from "@/data/past-events";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return webinars.map(({ slug }) => ({ slug }));
+  return [...webinars, ...pastEvents].map(({ slug }) => ({ slug }));
 }
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const webinar = webinars.find((item) => item.slug === slug);
-  return { title: webinar ? `${webinar.title} | ${webinar.date}` : "Webinar" };
+  const event = pastEvents.find((item) => item.slug === slug);
+  return {
+    title: webinar
+      ? `${webinar.title} | ${webinar.date}`
+      : event
+        ? `${event.title} | Past Event`
+        : "Event"
+  };
 }
 export default async function WebinarPage({ params }: Props) {
   const { slug } = await params;
   const webinar = webinars.find((item) => item.slug === slug);
+  const event = pastEvents.find((item) => item.slug === slug);
+  if (!webinar && event) {
+    return (
+      <div className="webinar-archive">
+        <PageHeader title={event.title} description={`${event.date} · ${event.location}`} />
+        <section className="section webinar-details">
+          <div className="container">
+            <Link className="webinar-link" href="/events">
+              ← Back to events
+            </Link>
+            <nav className="webinar-page-nav" aria-label="On this page">
+              <a href="#event-overview">Overview</a>
+              <a href="#event-details">Event details</a>
+            </nav>
+            <div className="webinar-overview-grid event-detail-grid" id="event-overview">
+              <aside className="webinar-session" id="event-details" aria-label="Event information">
+                <h2>Event details</h2>
+                <dl className="webinar-facts">
+                  <div>
+                    <dt>Date</dt>
+                    <dd>{event.date}</dd>
+                  </div>
+                  <div>
+                    <dt>Format</dt>
+                    <dd>{event.eventType}</dd>
+                  </div>
+                  <div>
+                    <dt>Location</dt>
+                    <dd>{event.location}</dd>
+                  </div>
+                  <div>
+                    <dt>Hosted by</dt>
+                    <dd>{event.hostedBy}</dd>
+                  </div>
+                </dl>
+                {event.links.map((link) => (
+                  <a
+                    className="button button-primary event-source-link"
+                    href={link.href}
+                    key={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label} ↗
+                  </a>
+                ))}
+              </aside>
+              <div className="webinar-description" aria-labelledby="event-overview-title">
+                <h2 id="event-overview-title">About this event</h2>
+                <p>{event.description}</p>
+                <h3>Event highlights</h3>
+                <ul>
+                  {event.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
   if (!webinar) notFound();
   return (
     <div className="webinar-archive">
@@ -34,7 +106,6 @@ export default async function WebinarPage({ params }: Props) {
           </nav>
           <div className="webinar-overview-grid" id="webinar-overview">
             <aside className="webinar-session" aria-label="Session information">
-              <span className="event-status">Past event</span>
               <h2>Session details</h2>
               <dl className="webinar-facts">
                 <div>
@@ -50,9 +121,14 @@ export default async function WebinarPage({ params }: Props) {
                   <dd>Andrew Lamb &amp; Victoria Jaqua</dd>
                 </div>
               </dl>
-              <button className="button button-primary" type="button" disabled>
-                Video coming soon
-              </button>
+              <a
+                className="button button-primary"
+                href={webinar.playlistUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch the webinar playlist ↗
+              </a>
             </aside>
             <div className="webinar-description">
               <h2>Quality in a distributed world</h2>
@@ -72,6 +148,7 @@ export default async function WebinarPage({ params }: Props) {
                 world to overcome this challenge, connecting people looking for ideas, innovations
                 and new connections.
               </p>
+              <WebinarRecordings recordings={webinar.recordings} />
             </div>
           </div>
           <section className="webinar-presenters" aria-labelledby="presenters-title">

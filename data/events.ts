@@ -9,6 +9,16 @@ export type Event = {
   timeZone: string;
 };
 
+export const upcomingAnnouncements = [
+  {
+    id: "end-of-project-event",
+    title: "OpenDQM End-of-Project Event",
+    location: "Austin, TX",
+    description:
+      "An end-of-project event is planned for Austin. Date and details will be announced soon."
+  }
+] as const;
+
 export const events: Event[] = [
   {
     id: "workshop-1",
@@ -40,15 +50,5 @@ export const events: Event[] = [
     description:
       "Our third in-person ecosystem scoping workshop is planned for Alexandria, Virginia.",
     timeZone: "America/New_York"
-  },
-  {
-    id: "workshop-4",
-    title: "Workshop #4",
-    startDate: "2026-12-02",
-    endDate: "2026-12-04",
-    location: "Austin, TX",
-    venue: "Austin Public Library, 710 W Cesar Chavez St, Austin, TX 78701",
-    description: "Our fourth in-person ecosystem scoping workshop is planned for Austin, Texas.",
-    timeZone: "America/Chicago"
   }
 ];
