@@ -10,6 +10,9 @@ const routes = [
   "/resources/",
   "/contact/",
   "/updates/",
+  "/events/october-inventor-gathering-2026/",
+  "/events/maker-faire-bay-area-2026-presentation/",
+  "/events/maker-faire-bay-area-2026-stall/",
   "/events/show-and-tell-december-3-2025/",
   "/events/show-and-tell-december-4-2025/"
 ];
@@ -62,9 +65,17 @@ for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {
       await page.goto(url(route));
+      const unlabeledFrames = await page
+        .locator("iframe")
+        .evaluateAll((frames) =>
+          frames
+            .filter((frame) => !frame.getAttribute("title")?.trim())
+            .map((frame) => frame.getAttribute("src") ?? "")
+        );
+      expect(unlabeledFrames, `${route} has untitled embedded frames`).toEqual([]);
       const result = await new AxeBuilder({ page })
-        // YouTube owns the markup inside its cross-origin player iframe.
-        .disableRules(["frame-tested"])
+        // YouTube owns the controls inside this cross-origin player iframe.
+        .exclude(".webinar-recordings iframe")
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
         .analyze();
       expect(result.violations, route).toEqual([]);
